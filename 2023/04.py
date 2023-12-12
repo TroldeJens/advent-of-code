@@ -76,9 +76,9 @@ def set_number_of_matching_cards(card_number: int, cards_and_matches: dict, tota
 def run_b():
     """Run assignment b"""
     lines = get_input(input_filename)
-    cards_and_matches = dict()
     
     ## Locate cardnumbers and matches, and save them to a dictionary
+    cards_and_matches = dict()
     for line in lines:
         ## Split the line at "|" and ":", so we get three sections
         splitline = re.split(r'[\|:]', line)
