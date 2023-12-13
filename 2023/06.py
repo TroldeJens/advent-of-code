@@ -23,15 +23,6 @@ def get_input(filename: str) -> list[str]:
     
     return lines
 
-class Vehicle:
-    
-    _movement_speed_ms = 0
-    _acceleration_ms = 0
-
-    def __init__(self, movement_speed_ms: int, acceleration_ms: int) -> None:
-        self._movement_speed_ms = movement_speed_ms
-        self._acceleration_ms = acceleration_ms
-    
 class Race:
     """
         Contains race details and logic for calculating number of ways a given record might be beaten.4
