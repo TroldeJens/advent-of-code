@@ -29,62 +29,28 @@ def get_input(filename: str) -> list[str]:
 
 class HandType(Enum):
     """The hand type, sorted by rank"""
-    UNKNOWN = 0
-    HIGH_CARD = 1
-    ONE_PAIR = 2
-    TWO_PAIR = 3
+    UNKNOWN         = 0
+    HIGH_CARD       = 1
+    ONE_PAIR        = 2
+    TWO_PAIR        = 3
     THREE_OF_A_KIND = 4
-    FULL_HOUSE = 5
-    FOUR_OF_A_KIND = 6
-    FIVE_OF_A_KIND = 7
+    FULL_HOUSE      = 5
+    FOUR_OF_A_KIND  = 6
+    FIVE_OF_A_KIND  = 7
 
 class Hand:
     """
-        Contains hand details and logic.
+        Contains hand details.
     """
 
     def __init__(self, hand :str, bid :int, ruleset: "Ruleset") -> None:
         self._hand = hand
         self._bid = bid
-        self._ruleset = ruleset
         self._card_occurences_sorted_by_most_common = Counter(self._hand).most_common()
         self._type = ruleset.get_hand_type(self)
 
     def __str__(self) -> str:
         return f"Hand: {self._hand}, Card occurences sorted by most common: {self._card_occurences_sorted_by_most_common}, Hand type: {self._type} and value: {self._type.value}, Bid: {self._bid}"
-
-    @staticmethod
-    def compare(hand1 :"Hand", hand2 :"Hand") -> int:
-        """
-            Custom compare method.
-            
-            Compare current hand against another.
-                First, compare the hand type value.
-                If equal, then compare each card - in initial order - against one another.
-
-                returns one of the following:
-                    1 : hand1 is larger than hand2
-                    -1: hand2 is larger than hand1
-                    0 : hand1 and hand2 are equal
-        """
-        if hand1._type.value > hand2._type.value:
-            return 1
-        
-        if hand1._type.value < hand2._type.value:
-            return -1
-
-        ## We assume that both hands use the same ruleset
-        ruleset = hand1._ruleset
-
-        ## Compare each card - in initial order.
-        for i in range(len(hand1._hand)):
-            if ruleset.get_card_value(hand1._hand[i]) > ruleset.get_card_value(hand2._hand[i]):
-                return 1
-            
-            if ruleset.get_card_value(hand1._hand[i]) < ruleset.get_card_value(hand2._hand[i]):
-                return -1
-
-        return 0
 
 class Ruleset(ABC):
     """Abstract class for the various rulesets"""
@@ -103,6 +69,36 @@ class Ruleset(ABC):
     def get_hand_type(hand :Hand) -> HandType:
         """Determine the hand type, based on ruleset rules."""
         pass
+
+    @classmethod
+    def compare(cls, hand1 :"Hand", hand2 :"Hand") -> int:
+        """
+            Custom compare method.
+            
+            Compare current hand against another.
+                First, compare the hand type value.
+                If equal, then compare each card - in initial order - against one another.
+
+                returns one of the following:
+                    1 : hand1 is larger than hand2
+                    -1: hand2 is larger than hand1
+                    0 : hand1 and hand2 are equal
+        """
+        if hand1._type.value > hand2._type.value:
+            return 1
+        
+        if hand1._type.value < hand2._type.value:
+            return -1
+
+        ## Compare each card - in initial order.
+        for i in range(len(hand1._hand)):
+            if cls.get_card_value(hand1._hand[i]) > cls.get_card_value(hand2._hand[i]):
+                return 1
+            
+            if cls.get_card_value(hand1._hand[i]) < cls.get_card_value(hand2._hand[i]):
+                return -1
+
+        return 0
 
 class RulesetStandard(Ruleset):
     """The standard ruleset."""
@@ -198,17 +194,18 @@ class RulesetUsingJokers(Ruleset):
 def run_a():
     """Run assignment a."""
 
+    ruleset = RulesetStandard()
     lines = get_input(input_filename)
 
     ## Get all hands and save to list.
     hands: list[Hand] = []
     for line in lines:
         hands_and_bids = re.findall(r'^([\d|A-Z]+) (\d+)', line)
-        hand = Hand(hand= hands_and_bids[0][0], bid= int(hands_and_bids[0][1]), ruleset= RulesetStandard)
+        hand = Hand(hand= hands_and_bids[0][0], bid= int(hands_and_bids[0][1]), ruleset= ruleset)
         hands.append(hand)
 
     ## Sort hand by custom comparitor.
-    hands.sort(key= cmp_to_key(Hand.compare))
+    hands.sort(key= cmp_to_key(ruleset.compare))
 
     ## Calculate total.
     total = 0
@@ -224,17 +221,18 @@ def run_a():
 def run_b():
     """Run assignment b"""
     
+    ruleset = RulesetUsingJokers()
     lines = get_input(input_filename)
 
     ## Get all hands and save to list.
     hands: list[Hand] = []
     for line in lines:
         hands_and_bids = re.findall(r'^([\d|A-Z]+) (\d+)', line)
-        hand = Hand(hand= hands_and_bids[0][0], bid= int(hands_and_bids[0][1]), ruleset= RulesetUsingJokers())
+        hand = Hand(hand= hands_and_bids[0][0], bid= int(hands_and_bids[0][1]), ruleset= ruleset)
         hands.append(hand)
         
     ## Sort hand by custom comparitor.
-    hands.sort(key= cmp_to_key(Hand.compare))
+    hands.sort(key= cmp_to_key(ruleset.compare))
 
     ## Calculate total.
     total = 0
