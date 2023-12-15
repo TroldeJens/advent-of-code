@@ -121,15 +121,15 @@ class RulesetStandard(Ruleset):
     def get_hand_type(hand :Hand) -> HandType:
         """Look at the first two most common cards to determine the hand type."""
         
-        most_cards = hand._card_occurences_sorted_by_most_common[0][1]
-        if most_cards == 5:                             return HandType.FIVE_OF_A_KIND
-        if most_cards == 4:                             return HandType.FOUR_OF_A_KIND
+        most_common_card = hand._card_occurences_sorted_by_most_common[0][1]
+        if most_common_card == 5:                                   return HandType.FIVE_OF_A_KIND
+        if most_common_card == 4:                                   return HandType.FOUR_OF_A_KIND
 
-        second_most_cards = hand._card_occurences_sorted_by_most_common[1][1]
-        if most_cards == 3 and second_most_cards == 2:  return HandType.FULL_HOUSE
-        if most_cards == 3:                             return HandType.THREE_OF_A_KIND
-        if most_cards == 2 and second_most_cards == 2:  return HandType.TWO_PAIR
-        if most_cards == 2:                             return HandType.ONE_PAIR
+        second_most_common_card = hand._card_occurences_sorted_by_most_common[1][1]
+        if most_common_card == 3 and second_most_common_card == 2:  return HandType.FULL_HOUSE
+        if most_common_card == 3:                                   return HandType.THREE_OF_A_KIND
+        if most_common_card == 2 and second_most_common_card == 2:  return HandType.TWO_PAIR
+        if most_common_card == 2:                                   return HandType.ONE_PAIR
 
         return HandType.HIGH_CARD
 
@@ -167,24 +167,24 @@ class RulesetUsingJokers(Ruleset):
         card_occurences_sorted_by_most_common_except_jokers.remove(("J", number_of_jokers))
 
         ## Determine the hand type, depending on most common non-joker card.
-        most_non_joker_cards = card_occurences_sorted_by_most_common_except_jokers[0][1]
+        most_common_non_joker_card = card_occurences_sorted_by_most_common_except_jokers[0][1]
         if number_of_jokers == 3:
-            if most_non_joker_cards == 2:               return HandType.FIVE_OF_A_KIND
+            if most_common_non_joker_card == 2:         return HandType.FIVE_OF_A_KIND
             else:                                       return HandType.FOUR_OF_A_KIND
             
         if number_of_jokers == 2:
-            if most_non_joker_cards == 3:               return HandType.FIVE_OF_A_KIND
-            if most_non_joker_cards == 2:               return HandType.FOUR_OF_A_KIND
+            if most_common_non_joker_card == 3:         return HandType.FIVE_OF_A_KIND
+            if most_common_non_joker_card == 2:         return HandType.FOUR_OF_A_KIND
             else:                                       return HandType.THREE_OF_A_KIND
 
         ## Just one joker past this point
-        if most_non_joker_cards == 4:                   return HandType.FIVE_OF_A_KIND
-        if most_non_joker_cards == 3:                   return HandType.FOUR_OF_A_KIND
+        if most_common_non_joker_card == 4:             return HandType.FIVE_OF_A_KIND
+        if most_common_non_joker_card == 3:             return HandType.FOUR_OF_A_KIND
 
         ## Determine the hand type, depending on two most common non-joker cards.
-        second_most_non_joker_cards = card_occurences_sorted_by_most_common_except_jokers[1][1]
-        if most_non_joker_cards == 2:
-            if second_most_non_joker_cards == 2:        return HandType.FULL_HOUSE
+        second_most_common_non_joker_card = card_occurences_sorted_by_most_common_except_jokers[1][1]
+        if most_common_non_joker_card == 2:
+            if second_most_common_non_joker_card == 2:  return HandType.FULL_HOUSE
             else:                                       return HandType.THREE_OF_A_KIND
 
         ## With a joker, One Pair is the lowest possible hand type.
