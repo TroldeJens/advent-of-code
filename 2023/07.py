@@ -190,11 +190,8 @@ class RulesetUsingJokers(Ruleset):
         ## With a joker, One Pair is the lowest possible hand type.
         return HandType.ONE_PAIR
 
-
-def run_a():
-    """Run assignment a."""
-
-    ruleset = RulesetStandard()
+def run(ruleset :Ruleset):
+    """Shared progam for part a & b"""
     lines = get_input(input_filename)
 
     ## Get all hands and save to list.
@@ -204,33 +201,6 @@ def run_a():
         hand = Hand(hand= hands_and_bids[0][0], bid= int(hands_and_bids[0][1]), ruleset= ruleset)
         hands.append(hand)
 
-    ## Sort hand by custom comparitor.
-    hands.sort(key= cmp_to_key(ruleset.compare))
-
-    ## Calculate total.
-    total = 0
-    for i, hand in enumerate(hands):
-        rank = i+1
-        total += rank * hand._bid
-
-        if debug:
-            print(f"Rank: {rank}. Hand: {hand}. Total: {total}")
-
-    print(f"Total: {total}")
-
-def run_b():
-    """Run assignment b"""
-    
-    ruleset = RulesetUsingJokers()
-    lines = get_input(input_filename)
-
-    ## Get all hands and save to list.
-    hands: list[Hand] = []
-    for line in lines:
-        hands_and_bids = re.findall(r'^([\d|A-Z]+) (\d+)', line)
-        hand = Hand(hand= hands_and_bids[0][0], bid= int(hands_and_bids[0][1]), ruleset= ruleset)
-        hands.append(hand)
-        
     ## Sort hand by custom comparitor.
     hands.sort(key= cmp_to_key(ruleset.compare))
 
@@ -248,7 +218,7 @@ def run_b():
 ## Run program
 if __name__ == '__main__':
     print("__START a__")
-    run_a()
+    run(ruleset= RulesetStandard)
     print("__START b__")
-    run_b()
+    run(ruleset= RulesetUsingJokers)
     print("__FINISHED__")
