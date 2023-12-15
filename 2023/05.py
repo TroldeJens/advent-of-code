@@ -26,11 +26,6 @@ class Mapping(Enum):
 
 class MappingRow:
     """A data-class used to contain data and logic about each proper mapping row in the input."""
-    _mapping_type = Mapping.UNKNOWN
-    _dest_range_start = 0
-    _dest_range_end = 0
-    _source_range_start = 0
-    _source_range_end = 0
 
     def __init__(self, mapping_type: Mapping, dest_range_start: int, source_range_start: int, range_length: int) -> None:
         """

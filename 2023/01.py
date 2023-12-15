@@ -2,10 +2,10 @@
 
 ### Globals
 ## Input and output
-# input_filename_a    = "01_input_initial_a.txt"
-# input_filename_b    = "01_input_initial_b.txt"
-input_filename_a    = "01_input.txt"
-input_filename_b    = input_filename_a
+input_filename_a    = "01_input_initial_a.txt"
+input_filename_b    = "01_input_initial_b.txt"
+# input_filename_a    = "01_input.txt"
+# input_filename_b    = input_filename_a
 ## Other
 debug               = False
 

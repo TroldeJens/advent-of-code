@@ -2,8 +2,8 @@
 
 #### Globals
 ## Input and output
-# input_filename  = "02_input_initial.txt"
-input_filename  = "02_input.txt"
+input_filename  = "02_input_initial.txt"
+# input_filename  = "02_input.txt"
 ## Other
 debug           = False
 

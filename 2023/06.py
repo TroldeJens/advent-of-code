@@ -27,15 +27,12 @@ class Race:
     """
         Contains race details and logic for calculating number of ways a given record might be beaten.4
     """
-    _number = 0
-    _length_ms = 0
-    _record_distance = 0
-    number_of_ways_record_can_be_beaten = 0
 
     def __init__(self, number, time, distance) -> None:
         self._number = number
         self._length_ms = time
         self._record_distance = distance
+        self.number_of_ways_record_can_be_beaten = 0
 
     def __str__(self) -> str:
         return f"Race {self._number}. Race length: {self._length_ms}. Record distance: {self._record_distance}"
