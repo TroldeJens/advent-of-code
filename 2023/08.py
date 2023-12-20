@@ -31,8 +31,11 @@ def run_a() -> None:
     lines = get_input(input_filename_a)
 
     directions = lines[0]
+    ## The structure is: dict(step_id, tuple(left_id, right_id))
     instructions :dict(str, tuple(str, str)) = dict() 
-    ## Get all hands and save to list.
+
+    ## Get all directions and save them to a list and
+    ##   get all instructions and save them to a dictionary with the structure dict(step_id, tuple(left_id, right_id))
     for i, line in enumerate(lines):
         if i < 2:
             ## Skip the first two lines
@@ -88,9 +91,13 @@ def run_b() -> None:
     lines = get_input(input_filename_b)
 
     directions = lines[0]
+    ## The structure is: dict(step_id, tuple(left_id, right_id))
     instructions: dict(str, tuple(str, str)) = dict()
+    ## The structure is: dict(start_step_id, current_step_id)
     start_step_and_current_step: dict(str, str) = dict()
-    ## Get all hands and save to list.
+    
+    ## Get all directions and save them to a list and
+    ##   get all instructions and save them to a dictionary with the structure dict(step_id, tuple(left_id, right_id))
     for i, line in enumerate(lines):
         if i < 2:
             ## Skip the first two lines
