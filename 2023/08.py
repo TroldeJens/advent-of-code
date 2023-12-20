@@ -96,7 +96,7 @@ def run_b() -> None:
     print(f"Directions: {directions}")
     print(f"start_instructions: {start_step_and_current_step}")
     
-    all_steps: list(int) = []
+    total_steps: list(int) = []
     for start_step in start_step_and_current_step:
         current_step = start_step
         number_of_steps = 0
@@ -115,13 +115,14 @@ def run_b() -> None:
                 else:
                     current_step = instruction[1]
 
+                ## If this is a goal-step, append the number of steps to all_steps, and move on the the next starting step.
                 if current_step[2] == "Z":
                     restart_loop = False
-                    print(f"FINISHED with startstep: {start_step}. - Number of steps: {number_of_steps}")
-                    all_steps.append(number_of_steps)
+                    print(f"FINISHED with startstep: {start_step}. Number of steps: {number_of_steps}")
+                    total_steps.append(number_of_steps)
                     break
 
-    print(f"All steps: {all_steps}. LCM of all steps: {lcm(*all_steps)}")
+    print(f"Total steps for each starting step: {total_steps}. LCM of all steps: {lcm(*total_steps)}")
 
 ## Run program
 if __name__ == '__main__':
