@@ -69,24 +69,6 @@ def run_a() -> None:
                 print(f"FINISHED - Number of steps: {number_of_steps}")
                 break
 
-
-def increase_step_for_all_start_steps(start_step_and_current_step :dict[str, str], instructions :dict[str, tuple[str, str]], direction :str) -> None:
-    """Move all starting steps from their current step to their next step."""
-
-    for starting_step, current_step in start_step_and_current_step.items():
-        if direction == "L":
-            start_step_and_current_step[starting_step] = instructions[current_step][0]
-        else:
-            start_step_and_current_step[starting_step] = instructions[current_step][1]
-
-def is_last_letter_z(start_step_and_current_step :dict[str, str]) -> None:
-    """Return True if all current steps ends with a "Z". False Otherwise."""
-    for current_step in start_step_and_current_step.values():
-        if current_step[2] != 'Z':
-            return False
-        
-    return True
-
 def run_b() -> None:
     """Run assignment b"""
     lines = get_input(input_filename_b)
