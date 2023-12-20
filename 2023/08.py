@@ -2,15 +2,16 @@
 
 #### Globals
 ## Input and output
-# input_filename_a  = "08_input_initial_a.txt"
-# input_filename_b  = "08_input_initial_b.txt"
-input_filename_a  = "08_input.txt"
-input_filename_b  = input_filename_a
+input_filename_a  = "08_input_initial_a.txt"
+input_filename_b  = "08_input_initial_b.txt"
+# input_filename_a  = "08_input.txt"
+# input_filename_b  = input_filename_a
 ## Other
 debug           = True
 
 import os
 from os import path
+from math import lcm
 import re
 
 def get_input(filename :str) -> list[str]:
@@ -113,28 +114,38 @@ def run_b() -> None:
     print(f"Directions: {directions}")
     print(f"start_instructions: {start_step_and_current_step}")
     
-    restart_loop = True
-    loop_number = 0
-    number_of_steps = 0
-    while restart_loop:
-        loop_number += 1
-        print(f"Starting loop {loop_number}")
+    all_steps: list(int) = []
+    for start_step in start_step_and_current_step:
+        current_step = start_step
+        number_of_steps = 0
+        restart_loop = True
+        loop_number = 0
 
-        for direction in directions:
-            number_of_steps += 1
+        while restart_loop:
+            loop_number += 1
+            print(f"Starting loop {loop_number}")
+            for direction in directions:
+                number_of_steps += 1
 
-            increase_step_for_all_start_steps(start_step_and_current_step, instructions, direction)
+                instruction = instructions[current_step]
+                if direction == 'L':
+                    current_step = instruction[0]
+                else:
+                    current_step = instruction[1]
 
-            if is_last_letter_z(start_step_and_current_step):
-                restart_loop = False
-                print(f"FINISHED - Number of steps: {number_of_steps}")
-                break
+                if current_step[2] == "Z":
+                    restart_loop = False
+                    print(f"FINISHED with startstep: {start_step}. - Number of steps: {number_of_steps}")
+                    all_steps.append(number_of_steps)
+                    break
+
+    print(f"All steps: {all_steps}. LCM of all steps: {lcm(*all_steps)}")
 
 ## Run program
 if __name__ == '__main__':
     print("__START a__")
     run_a()
     print("__START b__")
-    print("DO NOT RUN - runs forever!")
-    # run_b()
+    print("If you follow the instructions, you'll find that there's an endless loop in the obvious solution. You'll have to use Least Common Multiple (LCM) on the list of steps for each path.")
+    run_b()
     print("__FINISHED__")
