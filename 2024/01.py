@@ -1,9 +1,8 @@
 ### https://adventofcode.com/2024/day/1
-
 ### Globals
 ## Input and output
-input_filename_a    = "01_input_initial_a.txt"
-# input_filename_a    = "01_input.txt"
+# input_filename_a    = "01_input_initial.txt"
+input_filename_a    = "01_input.txt"
 
 ## Print debug messages
 debug               = False
@@ -47,7 +46,7 @@ def run_a():
             print(f"No numbers located in line: {line}")
             continue
 
-    ## Sort the lists
+    ## Sort the lists, lowest to highest
     leftSideNumbers = sort(leftSideNumbers)
     rightSideNumbers = sort(rightSideNumbers)
 
