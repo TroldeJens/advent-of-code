@@ -2,8 +2,8 @@
 
 ### Globals
 ## Input and output
-input_filename_a    = "02_input_initial.txt"
-# input_filename_a    = "02_input.txt"
+# input_filename_a    = "02_input_initial.txt"
+input_filename_a    = "02_input.txt"
 
 ## Print debug messages
 debug               = False
@@ -11,7 +11,6 @@ debug               = False
 import os
 from os import path
 import re
-from numpy import sort
 
 def get_input(filename: str) -> list[str]:
     """Get input from a file and return it as a list, where each index is a full line."""
@@ -37,9 +36,6 @@ def is_report_safe_using_problem_dampener(levels: list[int]) -> bool:
         tmpLevels = levels.copy()
         del tmpLevels[i] ## Remove index i
 
-        if debug: 
-            print(f"Levels: {levels}. TmpLevels: {tmpLevels}")
-
         ## Check if the report is safe now that index i is gone.
         if is_report_safe(tmpLevels):
             return True
@@ -53,28 +49,21 @@ def is_report_safe(levels: list[int], use_problem_dampener: bool = False) -> boo
         return is_report_safe_using_problem_dampener(levels)
 
     ## There's 0, 1 or 2 levels, so it's safe
-    if len(levels) <= 2 :
+    if len(levels) <= 2:
         return True
 
-    ## Decreasing levels. Flip the list.
+    ## Levels are decreasing. Flip the list.
     if levels[0] > levels[1]: 
         levels.reverse()
 
     for i in range(1, len(levels)):
         ## All levels must be increasing.
-        if (levels[i-1] >= levels[i]) : 
-            if debug:
-                print(f"Levels: {levels}. Level {levels[i-1]} >= {levels[i]}. Returning false.")
-
+        if (levels[i-1] >= levels[i]):
             return False
         
         ## Two levels must not differ by more than 3.
         diff = abs(levels[i-1] - levels[i])
-        if (diff > 3) : 
-            
-            if debug:
-                print(f"Levels: {levels}. Level {levels[i-1]} and {levels[i]} differs by more than 3. Returning false.")
-
+        if (diff > 3):
             return False
 
     return True
@@ -87,13 +76,14 @@ def run_a():
     lines = get_input(input_filename_a)
     for line in lines:
         levelsAsStrings = re.findall(r'\d+', line)
-        ## Convert levels from strings to ints.
-        levels = [int(level) for level in levelsAsStrings]
 
         ## Skip, if no digits were located
         if not levelsAsStrings:
             print(f"No numbers located in line: {line}")
             continue
+
+        ## Convert levels from strings to ints.
+        levels = [int(level) for level in levelsAsStrings]
         
         if is_report_safe(levels):
             safeReports += 1
@@ -108,14 +98,15 @@ def run_b():
     lines = get_input(input_filename_a)
     for line in lines:
         levelsAsStrings = re.findall(r'\d+', line)
-        ## Convert levels from strings to ints.
-        levels = [int(level) for level in levelsAsStrings]
 
         ## Skip, if no digits were located
         if not levelsAsStrings:
             print(f"No numbers located in line: {line}")
             continue
-        
+
+        ## Convert levels from strings to ints.
+        levels = [int(level) for level in levelsAsStrings]
+
         if is_report_safe(levels, use_problem_dampener=True):
             safeReports += 1
 

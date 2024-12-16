@@ -35,16 +35,14 @@ def run_a():
     lines = get_input(input_filename_a)
     for line in lines:
         numbers = re.findall(r'\d+', line)
-        leftSideNumbers.append(int(numbers[0]))
-        rightSideNumbers.append(int(numbers[1]))
-
-        if debug:
-            print(f"Digits: {numbers}")
 
         ## Skip, if no digits were located
         if not numbers:
             print(f"No numbers located in line: {line}")
             continue
+
+        leftSideNumbers.append(int(numbers[0]))
+        rightSideNumbers.append(int(numbers[1]))
 
     ## Sort the lists, lowest to highest
     leftSideNumbers = sort(leftSideNumbers)
@@ -52,13 +50,7 @@ def run_a():
 
     ## Calculate the total
     for i in range(0, len(leftSideNumbers)):
-        if debug:
-            print(f"index: {i}. List1: {leftSideNumbers[i]}. List2: {rightSideNumbers[i]}. Diff: {abs(leftSideNumbers[i] - rightSideNumbers[i])}")
-            
         result += abs(leftSideNumbers[i] - rightSideNumbers[i])
-
-    if debug:
-        print(f"All digits. List1: {leftSideNumbers}. List2: {rightSideNumbers}")
 
     print(f"Result: {result}")
 
@@ -74,18 +66,20 @@ def run_b():
     for line in lines:
         numbers = re.findall(r'\d+', line)
 
+        ## Skip, if no digits were located
+        if not numbers:
+            print(f"No numbers located in line: {line}")
+            continue
+
         ## Add left numbers to a list
         leftSideNumbers.append(int(numbers[0]))
         ## Count the number of right-side occurrences
         rightSideOccurrencesDict[int(numbers[1])] = rightSideOccurrencesDict.get(int(numbers[1]), 0) + 1
         
-    if debug:
-        print(f"RightSideOccurrences: {rightSideOccurrencesDict}")
-
     for number in leftSideNumbers:
         ## Multiply left-side numbers with the number of occurrences in the right-side list and add to the sum.
         result += number * rightSideOccurrencesDict.get(number, 0)
-                                          
+
     print(f"Result: {result}")
 
 ## Run program
