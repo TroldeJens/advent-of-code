@@ -2,8 +2,8 @@
 
 ### Globals
 ## Input and output
-# input_filename_a    = "02_input_initial.txt"
-input_filename_a    = "02_input.txt"
+# input_filename    = "02_input_initial.txt"
+input_filename    = "02_input.txt"
 
 ## Print debug messages
 debug               = False
@@ -72,8 +72,8 @@ def run_a():
     """Run assignment a."""
     safeReports = 0
 
-    ## Read each line and add to to lists
-    lines = get_input(input_filename_a)
+    ## Read each line and add to list
+    lines = get_input(input_filename)
     for line in lines:
         levelsAsStrings = re.findall(r'\d+', line)
 
@@ -94,8 +94,8 @@ def run_b():
     """Run assignment b."""
     safeReports = 0
 
-    ## Read each line and add to to lists
-    lines = get_input(input_filename_a)
+    ## Read each line and add to list
+    lines = get_input(input_filename)
     for line in lines:
         levelsAsStrings = re.findall(r'\d+', line)
 

@@ -1,8 +1,8 @@
 ### https://adventofcode.com/2024/day/1
 ### Globals
 ## Input and output
-# input_filename_a    = "01_input_initial.txt"
-input_filename_a    = "01_input.txt"
+# input_filename    = "01_input_initial.txt"
+input_filename    = "01_input.txt"
 
 ## Print debug messages
 debug               = False
@@ -31,8 +31,8 @@ def run_a():
     leftSideNumbers: list[int] = []
     rightSideNumbers: list[int] = []
 
-    ## Read each line and add to to lists
-    lines = get_input(input_filename_a)
+    ## Read each line and add to list
+    lines = get_input(input_filename)
     for line in lines:
         numbers = re.findall(r'\d+', line)
 
@@ -61,8 +61,8 @@ def run_b():
     leftSideNumbers: list[int] = []
     rightSideOccurrencesDict: dict[int, int] = {}
 
-    ## Read each line and add to to lists
-    lines = get_input(input_filename_a)
+    ## Read each line and add to list
+    lines = get_input(input_filename)
     for line in lines:
         numbers = re.findall(r'\d+', line)
 
