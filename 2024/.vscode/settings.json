@@ -10,5 +10,6 @@
     ],
     "python.testing.pytestEnabled": false,
     "python.testing.unittestEnabled": true,
-    "python.linting.enabled": true
+    "python.linting.enabled": true,
+    "inlineChat.lineNaturalLanguageHint": false // Experimental feature: Disable inline hint to use copilot when writing comments.
 }
